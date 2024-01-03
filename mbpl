@@ -1,0 +1,37 @@
+pipeline 
+{
+	agent any 
+	
+	stages
+	{
+		stage('checkoutcode')
+		{
+		steps{
+		git credentialsId: '513be3cb-b777-4fa8-bcbe-e8c03e48719e', url: 'https://github.com/Kedhar5/maven-web-application.git'
+		}}
+		stage('build')
+		{
+		steps{
+		sh "mvn clean package"
+		}}
+  /*
+		stage('SonarQube REport')
+		{
+		steps{
+		sh"mvn clean sonar:sonar"
+		}}
+		stage('nexus Artifact repository')
+		{
+		steps{
+		sh "mvn clean deploy"
+		}}
+		stage('deploy'){
+		steps{
+		sshagent(['690bec8e-d5a3-4479-b9e5-e9f4d67f49b2']){ --> This SSH agent has to be generated from the pipepline syntax
+sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@privateIPof Tomcat Server:/opt/apache-tomcat/webapps/"
+
+		}
+		}
+  */
+	}
+}
